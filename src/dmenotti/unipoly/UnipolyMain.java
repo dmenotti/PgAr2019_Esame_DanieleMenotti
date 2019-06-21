@@ -209,6 +209,7 @@ public class UnipolyMain {
 			} catch (InputMismatchException e) {
 			}
 			if(numTabelloni>=2 && numTabelloni<=20) break;
+			System.out.println("Numero inserito non valido!");
 		} while(true);
 		Tabellone.creaTabelloni(numTabelloni);
 		System.out.println("I tabelloni disponibili sono:");				//Visualizzo l'elenco di tutti i tabelloni creati, con ID e nome
