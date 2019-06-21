@@ -16,8 +16,8 @@ public class Edificio extends Casella {
 	private int proprietario;
 	
 
-	public Edificio(int id, int tipo, String nome) {
-		super(id, tipo, nome);
+	public Edificio(int id, int tipo, String nome, int settore) {
+		super(id, tipo, nome, settore);
 		costoCasa = (int) (BASE_COSTO * (1.0 + ((double)id/50.0)));
 		costoAlbergo = (int) (BASE_COSTO * (1.5 + (((double)id*2.0)/50.0)));
 		guadCasa = (int) (BASE_GUADAGNO * (1.0 + ((double)id/50.0)));

@@ -22,25 +22,28 @@ public class Tabellone {
 		if(numCaselle<CASELLE_MIN) throw new IncorrectSizeException("Devono essere presenti almeno " + STAZIONI_MIN + " stazioni.");
 		double stazPerCaselle = (double)numCaselle/(double)(numStazioni+1);
 		double cicloStazCaselle = 0;
+		int settoreAttivo = 0;
 		
-		caselle.add(new Casella(0, Casella.TIPO_INIZIALE, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)]));
+		caselle.add(new Casella(0, Casella.TIPO_INIZIALE, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)], -1));
 		
 		for(int i=1; i<numCaselle; i++) {
-			if(cicloStazCaselle>stazPerCaselle) {
-				cicloStazCaselle = addStazione(stazPerCaselle, cicloStazCaselle, i);
+			if(cicloStazCaselle>=stazPerCaselle) {
+				addStazione(i, settoreAttivo);
+				cicloStazCaselle-=stazPerCaselle;
+				settoreAttivo++;
 			} else {
 				int tipoRandom = Casella.getTipoRandom();
 				switch(tipoRandom) {
 				case Casella.TIPO_PROBABILITA:
-					addPossibilita(i);
+					addPossibilita(i, settoreAttivo);
 					break;
 					
 				case Casella.TIPO_IMPREVISTO:
-					addImprevisto(i);
+					addImprevisto(i, settoreAttivo);
 					break;
 					
 				case Casella.TIPO_EDIFICIO:
-					addEdificio(i);
+					addEdificio(i, settoreAttivo);
 					break;
 					
 				}
@@ -61,25 +64,24 @@ public class Tabellone {
 		nome = nomeTab;
 	}
 
-	private double addStazione(double stazPerCaselle, double cicloStazCaselle, int i) {
-		caselle.add(new Casella(i, Casella.TIPO_STAZIONE, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)]));
+	private void addStazione(int i, int settoreAttivo) {
+		caselle.add(new Casella(i, Casella.TIPO_STAZIONE, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)], settoreAttivo));
 		stazioniPresenti++;
-		cicloStazCaselle-=stazPerCaselle;
-		return cicloStazCaselle;
+
 	}
 
-	private void addImprevisto(int i) {
-		caselle.add(new ProbabilitaImprevisto(i, Casella.TIPO_IMPREVISTO, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)], Utilities.IMPREVISTI[Utilities.random(0, Utilities.IMPREVISTI.length-1)], -Utilities.random(1, 1000000)));
+	private void addImprevisto(int i, int settoreAttivo) {
+		caselle.add(new ProbabilitaImprevisto(i, Casella.TIPO_IMPREVISTO, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)], Utilities.IMPREVISTI[Utilities.random(0, Utilities.IMPREVISTI.length-1)], -Utilities.random(1, 1000000), settoreAttivo));
 		imprevistiPresenti++;
 	}
 	
-	private void addEdificio(int i) {
-		caselle.add(new Edificio(i, Casella.TIPO_EDIFICIO, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)]));
+	private void addEdificio(int i, int settoreAttivo) {
+		caselle.add(new Edificio(i, Casella.TIPO_EDIFICIO, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)], settoreAttivo));
 		edificiPresenti++;
 	}
 
-	private void addPossibilita(int i) {
-		caselle.add(new ProbabilitaImprevisto(i, Casella.TIPO_PROBABILITA, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)], Utilities.PROBABILITA[Utilities.random(0, Utilities.PROBABILITA.length-1)], Utilities.random(1, 1000000)));
+	private void addPossibilita(int i, int settoreAttivo) {
+		caselle.add(new ProbabilitaImprevisto(i, Casella.TIPO_PROBABILITA, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)], Utilities.PROBABILITA[Utilities.random(0, Utilities.PROBABILITA.length-1)], Utilities.random(1, 1000000), settoreAttivo));
 		probabilitaPresenti++;
 	}
 	

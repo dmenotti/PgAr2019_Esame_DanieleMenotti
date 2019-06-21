@@ -11,12 +11,14 @@ public class Casella {
 	private int id;
 	private int tipo;
 	private String nome;
+	private int gruppoAppartenenza;
 	
 	
-	public Casella(int id, int tipo, String nome) {
+	public Casella(int id, int tipo, String nome, int gruppoAppartenenza) {
 		this.id = id;
 		this.tipo = tipo;
 		this.nome = nome;
+		this.gruppoAppartenenza = gruppoAppartenenza;
 	}
 
 

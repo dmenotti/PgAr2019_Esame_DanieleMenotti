@@ -98,7 +98,7 @@ public class UnipolyMain {
 			System.out.println("Un albergo costa " + ((Edificio)t.getCasella(g.getPosizione())).getCostoAlbergo() + " I€€€");
 			String azione = sc.nextLine();
 			if(!azione.isBlank()) {
-				azione = Character.toString(sc.nextLine().charAt(0));
+				azione = Character.toString(azione.charAt(0));
 				if(azione.equalsIgnoreCase("c")) {
 					risAzione = acquistaCasa();
 					
