@@ -34,7 +34,7 @@ public class Giocatore {
 	}
 	
 	public void avanzaDiN(int i) {
-		posizione+=6;
+		posizione+=i;
 		if(posizione>UnipolyMain.DIM_TABELLONE) posizione = posizione%UnipolyMain.DIM_TABELLONE;
 	}
 	

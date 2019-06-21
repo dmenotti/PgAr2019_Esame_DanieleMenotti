@@ -6,6 +6,7 @@ public class Edificio extends Casella {
 	public static final int TIPO_EDIF_ALBERGO = 2;
 	public static final int BASE_COSTO = 5000;
 	public static final int BASE_GUADAGNO = 500;
+	public static final double MOLT_BLOCCO = 1.1;
 	
 	private int costoCasa;
 	private int costoAlbergo;
@@ -13,6 +14,7 @@ public class Edificio extends Casella {
 	private int guadAlbergo;
 	private int edifPresente = 0;
 	private int proprietario;
+	
 
 	public Edificio(int id, int tipo, String nome) {
 		super(id, tipo, nome);

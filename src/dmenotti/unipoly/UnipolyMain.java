@@ -9,8 +9,8 @@ public class UnipolyMain {
 	private static final int DENARO_MIN = 0;
 	private static final int DENARO_MAX = 1000000;
 	private static final int DENARO_INIZIALE = 250000;
-	public static final int NUM_STAZIONI = 4;
-	public static final int DIM_TABELLONE = 40;
+	public static final int NUM_STAZIONI = 2;
+	public static final int DIM_TABELLONE = 6;
 	private static Scanner sc = new Scanner(System.in);
 	private static Tabellone t = null;
 	private static Giocatore g = null;
@@ -96,12 +96,15 @@ public class UnipolyMain {
 			System.out.println("Vuoi acquistare un edificio? (C)asa, (A)lbergo, invio per non acquistare nulla");
 			System.out.println("Una casa costa " + ((Edificio)t.getCasella(g.getPosizione())).getCostoCasa() + " I€€€");
 			System.out.println("Un albergo costa " + ((Edificio)t.getCasella(g.getPosizione())).getCostoAlbergo() + " I€€€");
-			String azione = Character.toString(sc.nextLine().charAt(0));
-			if(azione.equalsIgnoreCase("c")) {
-				risAzione = acquistaCasa();
-				
-			} else if(azione.equalsIgnoreCase("a")) {
-				risAzione = acquistaAlbergo();
+			String azione = sc.nextLine();
+			if(!azione.isBlank()) {
+				azione = Character.toString(sc.nextLine().charAt(0));
+				if(azione.equalsIgnoreCase("c")) {
+					risAzione = acquistaCasa();
+					
+				} else if(azione.equalsIgnoreCase("a")) {
+					risAzione = acquistaAlbergo();
+				} else risAzione = 0;
 			} else risAzione = 0;
 		} while(risAzione==-1);
 	}
