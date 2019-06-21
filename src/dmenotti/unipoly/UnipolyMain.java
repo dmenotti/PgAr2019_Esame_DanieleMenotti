@@ -238,20 +238,19 @@ public class UnipolyMain {
 	private static void creaTabellone() {
 		do {
 			try {
-				t = new Tabellone(0, DIM_TABELLONE, NUM_STAZIONI);
+				t = new Tabellone(0, DIM_TABELLONE, NUM_STAZIONI);			//Creo un unico tabellone, che sarà quello utilizzato nella partita
 			} catch (IncorrectSizeException e) {
-				// TODO Auto-generated catch block
 				System.out.println("Oh-oh, errore:" + e.getMessage());
 			}
 		} while(t==null);
 			
 		System.out.println("Ho generato un tabellone con i seguenti parametri:");
-		System.out.println(t.viewStatsTabellone());
+		System.out.println(t.viewStatsTabellone());							//Visualizzo le statistiche del tabellone appena creato
 	}
 	
 	private static Giocatore creaGiocatore() {
 		System.out.print("E' ora di creare il tuo personaggio.\nCome ti chiami? ");
-		String nome;
+		String nome;														//Chiedo il nome del giocatore e gli assegno il denaro iniziale
 		do {
 			nome = sc.nextLine();
 		} while(nome.isBlank());
@@ -261,6 +260,6 @@ public class UnipolyMain {
 	}
 	
 	private static void posAttuale() {
-		System.out.println("Attualmente ti trovi a " + t.getCasella(g.getPosizione()).getNome());
+		System.out.println("Attualmente ti trovi a " + t.getCasella(g.getPosizione()).getNome());		//Visualizzo la posizione attuale. Usato solo all'inizio del programma
 	}
 }
