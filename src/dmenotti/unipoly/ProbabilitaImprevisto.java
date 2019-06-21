@@ -1,6 +1,6 @@
 package dmenotti.unipoly;
 
-public class ProbabilitaImprevisto extends Casella {
+public class ProbabilitaImprevisto extends Casella {	//Estensione della classe Casella contenente gli attributi specifici delle caselle probabilità e imprevisto
 	private String messaggio;
 	private int offset;
 

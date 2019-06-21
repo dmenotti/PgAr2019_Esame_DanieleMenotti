@@ -3,7 +3,7 @@ package dmenotti.unipoly;
 public class Casella {
 	public static final int TIPO_INIZIALE = 0;
 	public static final int TIPO_STAZIONE = 1;
-	public static final int TIPO_PROBABILITA = 2;
+	public static final int TIPO_PROBABILITA = 2;		//Costanti utilizzate per identificare il tipo di casella
 	public static final int TIPO_IMPREVISTO = 3;
 	public static final int TIPO_EDIFICIO = 4;
 	
@@ -39,7 +39,7 @@ public class Casella {
 
 
 	public static int getTipoRandom() {
-		int num = (int)Math.round(Math.random()*4+2);
+		int num = (int)Math.round(Math.random()*4+2);	//Restituisce il tipo di casella da creare, utilizzato in Tabellone
 		if(num>4) num = 4;
 		return num;
 	}
