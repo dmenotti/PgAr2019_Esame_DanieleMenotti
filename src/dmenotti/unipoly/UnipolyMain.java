@@ -72,6 +72,7 @@ public class UnipolyMain {
 	}
 	
 	private static void actionEdificio() {
+		System.out.println("La proprietà appartiene alla zona " + ((Edificio)t.getCasella(g.getPosizione())).getGruppoAppartenenza());
 		if(((Edificio)t.getCasella(g.getPosizione())).getEdifPresente() == Edificio.TIPO_EDIF_NESSUNO) {
 			actionAcquistaEdificio();
 		} else if(((Edificio)t.getCasella(g.getPosizione())).getEdifPresente() == Edificio.TIPO_EDIF_CASA) {

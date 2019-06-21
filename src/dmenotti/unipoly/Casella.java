@@ -11,15 +11,14 @@ public class Casella {
 	private int id;
 	private int tipo;
 	private String nome;
-	private int gruppoAppartenenza;
 	
 	
-	public Casella(int id, int tipo, String nome, int gruppoAppartenenza) {
+	public Casella(int id, int tipo, String nome) {
 		this.id = id;
 		this.tipo = tipo;
 		this.nome = nome;
-		this.gruppoAppartenenza = gruppoAppartenenza;
 	}
+
 
 
 	public int getId() {
@@ -36,6 +35,8 @@ public class Casella {
 		return nome;
 	}
 	
+
+
 	public static int getTipoRandom() {
 		int num = (int)Math.round(Math.random()*3+2);
 		if(num>4) num = 4;

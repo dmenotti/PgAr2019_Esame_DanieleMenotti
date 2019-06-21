@@ -14,14 +14,16 @@ public class Edificio extends Casella {
 	private int guadAlbergo;
 	private int edifPresente = 0;
 	private int proprietario;
+	private int gruppoAppartenenza;
 	
 
 	public Edificio(int id, int tipo, String nome, int settore) {
-		super(id, tipo, nome, settore);
+		super(id, tipo, nome);
 		costoCasa = (int) (BASE_COSTO * (1.0 + ((double)id/50.0)));
 		costoAlbergo = (int) (BASE_COSTO * (1.5 + (((double)id*2.0)/50.0)));
 		guadCasa = (int) (BASE_GUADAGNO * (1.0 + ((double)id/50.0)));
 		guadAlbergo = (int) (BASE_GUADAGNO * (1.5 + (((double)id*2.0)/50.0)));
+		gruppoAppartenenza = settore;
 	}
 
 	public int getProprietario() {
@@ -54,6 +56,10 @@ public class Edificio extends Casella {
 
 	public void setEdifPresente(int edifPresente) {
 		this.edifPresente = edifPresente;
+	}
+	
+	public int getGruppoAppartenenza() {
+		return gruppoAppartenenza;
 	}
 
 }

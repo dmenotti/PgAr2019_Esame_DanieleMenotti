@@ -4,8 +4,8 @@ public class ProbabilitaImprevisto extends Casella {
 	private String messaggio;
 	private int offset;
 
-	public ProbabilitaImprevisto(int id, int tipo, String nome, String messaggio, int offset, int settore) {
-		super(id, tipo, nome, settore);
+	public ProbabilitaImprevisto(int id, int tipo, String nome, String messaggio, int offset) {
+		super(id, tipo, nome);
 		this.messaggio = messaggio;
 		this.offset = offset;
 	}
