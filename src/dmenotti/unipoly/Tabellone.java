@@ -114,6 +114,10 @@ public class Tabellone {
 			case Casella.TIPO_EDIFICIO:
 				out = out.concat("Edificio ");
 				break;
+				
+			case Casella.TIPO_INIZIALE:
+				out = out.concat("Inizio ");
+				break;
 			}
 			out = out.concat(casella.getNome());
 			if(casella.getTipo() == Casella.TIPO_PROBABILITA || casella.getTipo() == Casella.TIPO_IMPREVISTO) out = out.concat(" " + ((ProbabilitaImprevisto)casella).getMessaggio() + " " + ((ProbabilitaImprevisto)casella).getOffset());

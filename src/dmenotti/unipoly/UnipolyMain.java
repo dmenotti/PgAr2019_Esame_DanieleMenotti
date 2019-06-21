@@ -104,7 +104,7 @@ public class UnipolyMain {
 	}
 	
 	private static boolean proprietarioDelBlocco(int zona) {
-		for(Casella casella : t.getCaselle()) {
+		for(Casella casella : t.getCaselle()) {																			//Controllo se seono proprietario del blocco (controllando se esistono caselle del blocco non appartenenti a me)
 			if((casella.getTipo() == Casella.TIPO_EDIFICIO && ((Edificio)casella).getGruppoAppartenenza() == zona)) {
 				if(((Edificio)casella).getProprietario() != g.getId()) return false;
 			}
@@ -115,7 +115,7 @@ public class UnipolyMain {
 	private static void actionAcquistaEdificio() {
 		int risAzione = -1;
 		do {
-			System.out.println("La tua disponibilita' e' di " + g.getDenaro() + " I€€€");
+			System.out.println("La tua disponibilita' e' di " + g.getDenaro() + " I€€€");										//Recupero le informazioni sull'edificio (prezzo casa e albergo) e le visualizzo
 			System.out.println("Vuoi acquistare un edificio? (C)asa, (A)lbergo, invio per non acquistare nulla");
 			System.out.println("Una casa costa " + ((Edificio)t.getCasella(g.getPosizione())).getCostoCasa() + " I€€€");
 			System.out.println("Un albergo costa " + ((Edificio)t.getCasella(g.getPosizione())).getCostoAlbergo() + " I€€€");
@@ -124,12 +124,12 @@ public class UnipolyMain {
 				azione = Character.toString(azione.charAt(0));
 				if(azione.equalsIgnoreCase("c")) {
 					risAzione = acquistaCasa();
-					
+																	//In base all'azione effettuata (inserito "c", "a" o nulla) acquisto una casa, un albergo o passo oltre
 				} else if(azione.equalsIgnoreCase("a")) {
 					risAzione = acquistaAlbergo();
 				} else risAzione = 0;
 			} else risAzione = 0;
-		} while(risAzione==-1);
+		} while(risAzione==-1);			//risAzione -1 è per indicare che non ho acquistato nulla
 	}
 
 	private static int acquistaAlbergo() {
@@ -142,7 +142,7 @@ public class UnipolyMain {
 		} else {
 			System.out.println("Non hai abbastanza soldi :(");
 			return -1;
-		}
+		}																												//Se il giocatore ha abbastanza soldi acquista una casa o albergo impostandone il tipo e il proprietario, in caso contrario visualizza un messaggio di errore
 	}
 
 	private static int acquistaCasa() {
@@ -158,20 +158,20 @@ public class UnipolyMain {
 		}
 	}
 	
-	private static void actionProbabilita() {
+	private static void actionProbabilita() {	//Se capito su una probabilità recupero testo e guadagno dagli attributi della casella, visualizzo il testo e aggiungo il guadagno al denaro posseduto
 		System.out.println(((ProbabilitaImprevisto)t.getCasella(g.getPosizione())).getMessaggio() + ", ricevi " + ((ProbabilitaImprevisto)t.getCasella(g.getPosizione())).getOffset() + " I€€€");
 		g.aggiornaDenaro(((ProbabilitaImprevisto)t.getCasella(g.getPosizione())).getOffset());
 		if(g.getDenaro()<DENARO_MAX) System.out.println("Ora hai " + g.getDenaro() + " I€€€");
 	}
 	
-	private static void actionImprevisto() {
+	private static void actionImprevisto() {	//Se capito su un imprevisto recupero testo e perdita dagli attributi della casella, visualizzo il testo e tolgo la perdita dal denaro posseduto
 		System.out.println(((ProbabilitaImprevisto)t.getCasella(g.getPosizione())).getMessaggio() + ", spendi " + -((ProbabilitaImprevisto)t.getCasella(g.getPosizione())).getOffset() + " I€€€");
 		g.aggiornaDenaro(((ProbabilitaImprevisto)t.getCasella(g.getPosizione())).getOffset());
 		if(g.getDenaro()>DENARO_MIN) System.out.println("Ora hai " + g.getDenaro() + " I€€€");
 	}
 	
 	private static void actionStazione() {
-		do {
+		do {													//Nel caso capitassi su una stazione recupero tutte le altre stazioni presenti nel tabellone e le mostro all'utente
 		System.out.println("\nEcco le stazioni disponibili:");
 		for(Casella casella : t.getCaselle()) {
 			if(casella.getTipo() == Casella.TIPO_STAZIONE && casella.getId() != t.getCasella(g.getPosizione()).getId()) {
@@ -181,7 +181,7 @@ public class UnipolyMain {
 		System.out.print("Scrivi l'ID della stazione di destinazione; se non vuoi spostarti premi semplicemente invio: ");
 		String dest = sc.nextLine();
 		if(dest.isBlank()) return;
-		else {
+		else {								//Ogni casella ha un ID, qui viene usato per determinare la stazione di destinazione
 			int numDest = -1;
 			try {
 				numDest = Integer.parseInt(dest);
@@ -189,7 +189,7 @@ public class UnipolyMain {
 				
 			}
 				if(numDest<t.getCaselle().size() && numDest>0) {
-					if(t.getCasella(numDest).getTipo() == Casella.TIPO_STAZIONE) {
+					if(t.getCasella(numDest).getTipo() == Casella.TIPO_STAZIONE) {			//Appurato che l'id inserito è valido ed è di una stazione avviene il viaggio vero e proprio
 						System.out.println("In viaggio verso " + t.getCasella(numDest).getNome() + "...");
 						g.avanzaVerso(numDest);
 						return;
@@ -202,7 +202,7 @@ public class UnipolyMain {
 	private static int scegliTabellone() {
 		int numTabelloni = -1;
 		do {
-			System.out.print("Quanti tabelloni vuoi creare? (2-20): ");
+			System.out.print("Quanti tabelloni vuoi creare? (2-20): ");		//L'utente può decidere quanti tabelloni creare. Il numero massimo è dato dal numero di nomi dedicati ai tabelloni
 			try {
 				numTabelloni = sc.nextInt();
 				sc.nextLine();
@@ -211,7 +211,7 @@ public class UnipolyMain {
 			if(numTabelloni>=2 && numTabelloni<=20) break;
 		} while(true);
 		Tabellone.creaTabelloni(numTabelloni);
-		System.out.println("I tabelloni disponibili sono:");
+		System.out.println("I tabelloni disponibili sono:");				//Visualizzo l'elenco di tutti i tabelloni creati, con ID e nome
 		for(Tabellone tabEstratto : Tabellone.archivioMappe) {
 			System.out.println("Tabellone " + tabEstratto.getId() + ", " + tabEstratto.getNome());
 		}
@@ -221,7 +221,7 @@ public class UnipolyMain {
 			System.out.print("Scrivi il nome del tabellone scelto o q per uscire: ");
 			String tabScelto = sc.nextLine();
 			if(tabScelto.equalsIgnoreCase("q")) return -1;
-			for(Tabellone tabEstratto : Tabellone.archivioMappe) {
+			for(Tabellone tabEstratto : Tabellone.archivioMappe) {			//Una volta chiesto il nome all'utente cerco se questo esiste all'interno dell'array. Se esiste associo il tabellone scelto a quello attivo e si è pronti per giocare
 				if(tabEstratto.getNome().equalsIgnoreCase(tabScelto)) {
 					t = tabEstratto;
 					scelto = true;
@@ -231,7 +231,7 @@ public class UnipolyMain {
 		} while(!scelto);
 		
 		System.out.println("Il tabellone scelto possiete i seguenti parametri:");
-		System.out.println(t.viewStatsTabellone());
+		System.out.println(t.viewStatsTabellone());							//Visualizzo i parametri del tabellone
 		return 0;
 	}
 	
