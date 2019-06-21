@@ -4,6 +4,7 @@ public class Giocatore {
 	private int id;
 	private String nome;
 	private int denaro;
+	private int posizione = 0;
 	
 	
 	public Giocatore(int id, String nome, int denaro) {
