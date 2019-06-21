@@ -4,15 +4,15 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UnipolyMain {
-	private static final int DADO_MAX = 12;
+	private static final int DADO_MAX = 12;			//Numero massimo e minimo che può uscire dal dado
 	private static final int DADO_MIN = 1;
 	private static final int DENARO_MIN = 0;
-	private static final int DENARO_MAX = 1000000;
-	private static final int DENARO_INIZIALE = 250000;
+	private static final int DENARO_MAX = 1000000;	//Soglie per vincita e bancarotta
+	private static final int DENARO_INIZIALE = 250000;	//Denaro iniziale posseduto dal giocatore
 	public static final int NUM_STAZIONI = 3;
-	public static final int DIM_TABELLONE = 12;
+	public static final int DIM_TABELLONE = 12;		//Numero di caselle e stazioni totali. DIM_TABELLONE comprende anche il numero di stazioni
 	private static Scanner sc = new Scanner(System.in);
-	private static Tabellone t = null;
+	private static Tabellone t = null;		//Oggetti tabellone e giocatore
 	private static Giocatore g = null;
 	
 	public static void main(String[] args) {
@@ -20,31 +20,31 @@ public class UnipolyMain {
 		g = creaGiocatore();
 		System.out.print("Vuoi scegliere il tabellone? (S)i, (N)o, default no: ");
 		if(sc.nextLine().equalsIgnoreCase("S")) {
-			if(scegliTabellone() == -1) return;
+			if(scegliTabellone() == -1) return;		//Se inserisco q durante la scelta del tabellone posso uscire dal programma
 		}
-		else creaTabellone();
-		posAttuale();
-		gioca();
+		else creaTabellone();		//Se non ne scelgo uno ne viene creato uno random
+		posAttuale();				//Mi informa della mia posizione attuale (solo all'inizio), non ha un'utilità ai fini del gioco ma lo rende più bello
+		gioca();					//Tutte le funzioni di gioco sono parte di questo metodo
 	}
 
 	private static void gioca() {
 		do {
 			System.out.print("Premi invio per tirare i dadi o scrivi q per uscire ");
-			if(sc.nextLine().equalsIgnoreCase("q")) return;
-			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			if(sc.nextLine().equalsIgnoreCase("q")) return;								//Uscita rapida dal gioco
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");	//Un po' di spazio tra una giocata e l'altra
 			int tiroDadi = Utilities.random(DADO_MIN, DADO_MAX);
 			System.out.println("I dadi dicono: " + tiroDadi);
-			g.avanzaDiN(tiroDadi);
-			System.out.println("Sei stato spostato a " + t.getCasella(g.getPosizione()).getNome());
-			checkTipo();
-		} while(g.getDenaro()>DENARO_MIN && g.getDenaro()<DENARO_MAX);
+			g.avanzaDiN(tiroDadi);														//Avanzo di "tiroDadi" poszioni
+			System.out.println("Sei stato spostato a " + t.getCasella(g.getPosizione()).getNome());		//Il gioco mi mostra il nome della casella
+			checkTipo();	//In base al tipo di cella faccio una determinata azione
+		} while(g.getDenaro()>DENARO_MIN && g.getDenaro()<DENARO_MAX);		//Se esco dal ciclo significa che ho vinto o sono andato in bancarotta
 		System.out.println("La partita è terminata!");
-		if(g.getDenaro()<DENARO_MIN) System.out.println("Sei andato in bancarotta con un debito di " + (-g.getDenaro()) + " I€€€");
+		if(g.getDenaro()<DENARO_MIN) System.out.println("Sei andato in bancarotta con un debito di " + (-g.getDenaro()) + " I€€€");		//Mostra il "saldo finale"
 		if(g.getDenaro()>DENARO_MAX) System.out.println("Hai vinto con " + g.getDenaro() + " I€€€");
 		
 		System.out.print("Vuoi vedere la struttura del tabellone? (S)i, (N)o, default no ");
 		String input = sc.nextLine();
-		if(!input.isBlank()) {
+		if(!input.isBlank()) {																	//Se l'utente vuole può vedere la struttura del tabellone su cui ha giocato
 			if(Character.toString(input.charAt(0)).equalsIgnoreCase("s")) System.out.println(t.viewTabellone());
 		}
 	}
@@ -57,41 +57,41 @@ public class UnipolyMain {
 			
 		case Casella.TIPO_EDIFICIO:
 			System.out.println("Edificio: che bel cantiere...");
-			actionEdificio();
+			actionEdificio();	//Azioni specifiche per il tipo edificio
 			break;
 			
 		case Casella.TIPO_PROBABILITA:
 			System.out.println("Probabilita': e' il tuo giorno fortunato!");
-			actionProbabilita();
+			actionProbabilita();	//Azioni specifiche per il tipo probabilità
 			break;
 			
 		case Casella.TIPO_IMPREVISTO:
 			System.out.println("Imprevisto: preparati a dover spendere...");
-			actionImprevisto();
+			actionImprevisto();		//Azioni specifiche per il tipo imprevisto
 			break;
 			
 		case Casella.TIPO_STAZIONE:
 			System.out.println("Stazione: Choo Choo, tutti in carrozza!");
-			actionStazione();
+			actionStazione();		//Azioni specifiche per il tipo stazione
 			break;
 		}
 	}
 	
 	private static void actionEdificio() {
-		System.out.println("La proprietà appartiene alla zona " + ((Edificio)t.getCasella(g.getPosizione())).getGruppoAppartenenza());
-		boolean proprietarioBlocco = proprietarioDelBlocco(((Edificio)t.getCasella(g.getPosizione())).getGruppoAppartenenza());
-		if(((Edificio)t.getCasella(g.getPosizione())).getEdifPresente() == Edificio.TIPO_EDIF_NESSUNO) {
-			actionAcquistaEdificio();
+		System.out.println("La proprietà appartiene alla zona " + ((Edificio)t.getCasella(g.getPosizione())).getGruppoAppartenenza());	//Mostro la zona di appartenenza
+		boolean proprietarioBlocco = proprietarioDelBlocco(((Edificio)t.getCasella(g.getPosizione())).getGruppoAppartenenza());			//La struttura (Edificio)t.getCasella(g.getPosizione())).----- la si vede spesso: per poter usare le funzioni di edificio devo castare il tipo di casella, in quanto le salvo all'interno dell'array solo come "Casella generica"
+		if(((Edificio)t.getCasella(g.getPosizione())).getEdifPresente() == Edificio.TIPO_EDIF_NESSUNO) {								
+			actionAcquistaEdificio();																									//Se l'edificio non è di nessuno lo posso acquistare
 		} else if(((Edificio)t.getCasella(g.getPosizione())).getEdifPresente() == Edificio.TIPO_EDIF_CASA) {
-			if(((Edificio)t.getCasella(g.getPosizione())).getProprietario() == g.getId()) {
+			if(((Edificio)t.getCasella(g.getPosizione())).getProprietario() == g.getId()) {												//Se è casa o albergo controllo chi è il proprietario, se è il giocatore "attivo" (ovvero l'unico) gli mostro un messaggio
 				System.out.println("Sei proprietario di una casa!");
 				int incasso = 0;
-				if(proprietarioBlocco) incasso = (int) (((Edificio)t.getCasella(g.getPosizione())).getGuadCasa() * Edificio.MOLT_BLOCCO);
+				if(proprietarioBlocco) incasso = (int) (((Edificio)t.getCasella(g.getPosizione())).getGuadCasa() * Edificio.MOLT_BLOCCO);	//Se il proprietario possiede l'intero blocco allora moltiplico il guadagno per l'apposito moltiplicatore
 				else incasso = (int) (((Edificio)t.getCasella(g.getPosizione())).getGuadCasa());
 				System.out.println("Incassi " + incasso + " I€€€");
-				g.aggiornaDenaro(incasso);
+				g.aggiornaDenaro(incasso);																								//Aggiorno il denaro in possesso del giocatore
 			}
-		} else if(((Edificio)t.getCasella(g.getPosizione())).getEdifPresente() == Edificio.TIPO_EDIF_ALBERGO) {
+		} else if(((Edificio)t.getCasella(g.getPosizione())).getEdifPresente() == Edificio.TIPO_EDIF_ALBERGO) {							//La stessa cosa si ripete per l'albergo
 			if(((Edificio)t.getCasella(g.getPosizione())).getProprietario() == g.getId()) {
 				System.out.println("Sei proprietario di un albergo!");
 				int incasso = 0;
