@@ -9,8 +9,8 @@ public class UnipolyMain {
 	private static final int DENARO_MIN = 0;
 	private static final int DENARO_MAX = 1000000;
 	private static final int DENARO_INIZIALE = 250000;
-	public static final int NUM_STAZIONI = 3;
-	public static final int DIM_TABELLONE = 10;
+	public static final int NUM_STAZIONI = 2;
+	public static final int DIM_TABELLONE = 6;
 	private static Scanner sc = new Scanner(System.in);
 	private static Tabellone t = null;
 	private static Giocatore g = null;
@@ -73,23 +73,39 @@ public class UnipolyMain {
 	
 	private static void actionEdificio() {
 		System.out.println("La proprietà appartiene alla zona " + ((Edificio)t.getCasella(g.getPosizione())).getGruppoAppartenenza());
+		boolean proprietarioBlocco = proprietarioDelBlocco(((Edificio)t.getCasella(g.getPosizione())).getGruppoAppartenenza());
 		if(((Edificio)t.getCasella(g.getPosizione())).getEdifPresente() == Edificio.TIPO_EDIF_NESSUNO) {
 			actionAcquistaEdificio();
 		} else if(((Edificio)t.getCasella(g.getPosizione())).getEdifPresente() == Edificio.TIPO_EDIF_CASA) {
 			if(((Edificio)t.getCasella(g.getPosizione())).getProprietario() == g.getId()) {
 				System.out.println("Sei proprietario di una casa!");
-				System.out.println("Incassi " + ((Edificio)t.getCasella(g.getPosizione())).getGuadCasa() + " I€€€");
-				g.aggiornaDenaro(((Edificio)t.getCasella(g.getPosizione())).getGuadCasa());
+				int incasso = 0;
+				if(proprietarioBlocco) incasso = (int) (((Edificio)t.getCasella(g.getPosizione())).getGuadCasa() * Edificio.MOLT_BLOCCO);
+				else incasso = (int) (((Edificio)t.getCasella(g.getPosizione())).getGuadCasa());
+				System.out.println("Incassi " + incasso + " I€€€");
+				g.aggiornaDenaro(incasso);
 			}
 		} else if(((Edificio)t.getCasella(g.getPosizione())).getEdifPresente() == Edificio.TIPO_EDIF_ALBERGO) {
 			if(((Edificio)t.getCasella(g.getPosizione())).getProprietario() == g.getId()) {
 				System.out.println("Sei proprietario di un albergo!");
-				System.out.println("Incassi " + ((Edificio)t.getCasella(g.getPosizione())).getGuadAlbergo() + " I€€€");
-				g.aggiornaDenaro(((Edificio)t.getCasella(g.getPosizione())).getGuadAlbergo());
+				int incasso = 0;
+				if(proprietarioBlocco) incasso = (int) (((Edificio)t.getCasella(g.getPosizione())).getGuadAlbergo() * Edificio.MOLT_BLOCCO);
+				else incasso = (int) (((Edificio)t.getCasella(g.getPosizione())).getGuadAlbergo());
+				System.out.println("Incassi " + incasso + " I€€€");
+				g.aggiornaDenaro(incasso);
 			}
 		}
 	}
-
+	
+	private static boolean proprietarioDelBlocco(int zona) {
+		for(Casella casella : t.getCaselle()) {
+			if((casella.getTipo() == Casella.TIPO_EDIFICIO && ((Edificio)casella).getGruppoAppartenenza() == zona)) {
+				if(((Edificio)casella).getProprietario() != g.getId()) return false;
+			}
+		}
+		System.out.println("Sei proprietario dell'intero blocco! Avrai un incasso bonus dalle tue proprietà!");
+		return true;
+	}
 	private static void actionAcquistaEdificio() {
 		int risAzione = -1;
 		do {

@@ -6,14 +6,14 @@ public class Edificio extends Casella {
 	public static final int TIPO_EDIF_ALBERGO = 2;
 	public static final int BASE_COSTO = 5000;
 	public static final int BASE_GUADAGNO = 500;
-	public static final double MOLT_BLOCCO = 1.1;
+	public static final double MOLT_BLOCCO = 1.3;
 	
 	private int costoCasa;
 	private int costoAlbergo;
 	private int guadCasa;
 	private int guadAlbergo;
 	private int edifPresente = 0;
-	private int proprietario;
+	private int proprietario = -1;
 	private int gruppoAppartenenza;
 	
 
