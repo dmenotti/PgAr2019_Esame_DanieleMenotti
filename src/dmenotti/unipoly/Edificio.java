@@ -1,8 +1,9 @@
 package dmenotti.unipoly;
 
 public class Edificio extends Casella {
-	public static final int TIPO_CASA = 1;
-	public static final int TIPO_ALBERGO = 2;
+	public static final int TIPO_EDIF_NESSUNO = 0;
+	public static final int TIPO_EDIF_CASA = 1;
+	public static final int TIPO_EDIF_ALBERGO = 2;
 	public static final int BASE_COSTO = 5000;
 	public static final int BASE_GUADAGNO = 500;
 	
@@ -11,21 +12,21 @@ public class Edificio extends Casella {
 	private int guadCasa;
 	private int guadAlbergo;
 	private int edifPresente = 0;
-	private String proprietario;
+	private int proprietario;
 
 	public Edificio(int id, int tipo, String nome) {
 		super(id, tipo, nome);
-		costoCasa = BASE_COSTO * (int)(1.0 + (id/10.0));
-		costoAlbergo = BASE_COSTO * (int)(1.5 + ((id*2.0)/10.0));
-		guadCasa = BASE_GUADAGNO * (int)(1.0 + (id/10.0));
-		guadAlbergo = BASE_GUADAGNO * (int)(1.5 + ((id*2.0)/10.0));
+		costoCasa = (int) (BASE_COSTO * (1.0 + ((double)id/50.0)));
+		costoAlbergo = (int) (BASE_COSTO * (1.5 + (((double)id*2.0)/50.0)));
+		guadCasa = (int) (BASE_GUADAGNO * (1.0 + ((double)id/50.0)));
+		guadAlbergo = (int) (BASE_GUADAGNO * (1.5 + (((double)id*2.0)/50.0)));
 	}
 
-	public String getProprietario() {
+	public int getProprietario() {
 		return proprietario;
 	}
 
-	public void setProprietario(String proprietario) {
+	public void setProprietario(int proprietario) {
 		this.proprietario = proprietario;
 	}
 
@@ -47,6 +48,10 @@ public class Edificio extends Casella {
 
 	public int getGuadAlbergo() {
 		return guadAlbergo;
+	}
+
+	public void setEdifPresente(int edifPresente) {
+		this.edifPresente = edifPresente;
 	}
 
 }

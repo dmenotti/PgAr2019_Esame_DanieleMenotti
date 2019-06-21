@@ -51,7 +51,7 @@ public class UnipolyMain {
 			
 		case Casella.TIPO_EDIFICIO:
 			System.out.println("Edificio: che bel cantiere...");
-			actionProbabilita();
+			actionEdificio();
 			break;
 			
 		case Casella.TIPO_PROBABILITA:
@@ -72,9 +72,63 @@ public class UnipolyMain {
 	}
 	
 	private static void actionEdificio() {
-		if(((Edificio)t.getCasella(g.getPosizione())).getEdifPresente() == 0) {
-			System.out.println("Vuoi acquistare un edificio?");
-			System.out.println("Una casa costa ");
+		if(((Edificio)t.getCasella(g.getPosizione())).getEdifPresente() == Edificio.TIPO_EDIF_NESSUNO) {
+			actionAcquistaEdificio();
+		} else if(((Edificio)t.getCasella(g.getPosizione())).getEdifPresente() == Edificio.TIPO_EDIF_CASA) {
+			if(((Edificio)t.getCasella(g.getPosizione())).getProprietario() == g.getId()) {
+				System.out.println("Sei proprietario di una casa!");
+				System.out.println("Incassi " + ((Edificio)t.getCasella(g.getPosizione())).getGuadCasa() + " I€€€");
+				g.aggiornaDenaro(((Edificio)t.getCasella(g.getPosizione())).getGuadCasa());
+			}
+		} else if(((Edificio)t.getCasella(g.getPosizione())).getEdifPresente() == Edificio.TIPO_EDIF_ALBERGO) {
+			if(((Edificio)t.getCasella(g.getPosizione())).getProprietario() == g.getId()) {
+				System.out.println("Sei proprietario di un albergo!");
+				System.out.println("Incassi " + ((Edificio)t.getCasella(g.getPosizione())).getGuadAlbergo() + " I€€€");
+				g.aggiornaDenaro(((Edificio)t.getCasella(g.getPosizione())).getGuadAlbergo());
+			}
+		}
+	}
+
+	private static void actionAcquistaEdificio() {
+		int risAzione = -1;
+		do {
+			System.out.println("La tua disponibilita' e' di " + g.getDenaro() + " I€€€");
+			System.out.println("Vuoi acquistare un edificio? (C)asa, (A)lbergo, invio per non acquistare nulla");
+			System.out.println("Una casa costa " + ((Edificio)t.getCasella(g.getPosizione())).getCostoCasa() + " I€€€");
+			System.out.println("Un albergo costa " + ((Edificio)t.getCasella(g.getPosizione())).getCostoAlbergo() + " I€€€");
+			String azione = Character.toString(sc.nextLine().charAt(0));
+			if(azione.equalsIgnoreCase("c")) {
+				risAzione = acquistaCasa();
+				
+			} else if(azione.equalsIgnoreCase("a")) {
+				risAzione = acquistaAlbergo();
+			} else risAzione = 0;
+		} while(risAzione==-1);
+	}
+
+	private static int acquistaAlbergo() {
+		if(g.getDenaro()-((Edificio)t.getCasella(g.getPosizione())).getCostoAlbergo()>0) {
+			((Edificio)t.getCasella(g.getPosizione())).setEdifPresente(Edificio.TIPO_EDIF_ALBERGO);
+			((Edificio)t.getCasella(g.getPosizione())).setProprietario(g.getId());
+			g.aggiornaDenaro(-((Edificio)t.getCasella(g.getPosizione())).getCostoAlbergo());
+			System.out.println("Hai acquistato un albergo!");
+			return 0;
+		} else {
+			System.out.println("Non hai abbastanza soldi :(");
+			return -1;
+		}
+	}
+
+	private static int acquistaCasa() {
+		if(g.getDenaro()-((Edificio)t.getCasella(g.getPosizione())).getCostoCasa()>0) {
+			((Edificio)t.getCasella(g.getPosizione())).setEdifPresente(Edificio.TIPO_EDIF_CASA);
+			((Edificio)t.getCasella(g.getPosizione())).setProprietario(g.getId());
+			g.aggiornaDenaro(-((Edificio)t.getCasella(g.getPosizione())).getCostoCasa());
+			System.out.println("Hai acquistato una casa!");
+			return 0;
+		} else {
+			System.out.println("Non hai abbastanza soldi :(");
+			return -1;
 		}
 	}
 	
@@ -171,7 +225,7 @@ public class UnipolyMain {
 	
 	private static Giocatore creaGiocatore() {
 		System.out.print("E' ora di creare il tuo personaggio.\nCome ti chiami? ");
-		Giocatore g = new Giocatore(DENARO_MIN, sc.nextLine(), DENARO_INIZIALE);
+		Giocatore g = new Giocatore(0, sc.nextLine(), DENARO_INIZIALE);
 		System.out.println(g.getNome() + ", inizi il gioco con " + DENARO_INIZIALE + " I€€€");
 		return g;
 	}
