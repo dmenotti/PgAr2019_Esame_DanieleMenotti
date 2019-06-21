@@ -23,3 +23,5 @@ A fine partita, se lo desidererete, potrete vedere la mappa su cui avete giocato
 ## È come il vero Monopoly?
 ![](https://i.kym-cdn.com/photos/images/newsfeed/001/457/331/a37.jpg)
 
+Fun Fact: a Cuba il Monopoly è considerato troppo vicino alle idee del capitalismo e pertanto è tutt'oggi bandito
+
