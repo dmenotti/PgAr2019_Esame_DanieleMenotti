@@ -21,20 +21,16 @@ public class Tabellone {
 		
 		for(int i=0; i<numCaselle; i++) {
 			if(cicloStazCaselle>stazPerCaselle) {
-				caselle.add(new Casella(i, Casella.TIPO_STAZIONE, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)]));
-				stazioniPresenti++;
-				cicloStazCaselle-=stazPerCaselle;
+				cicloStazCaselle = addStazione(stazPerCaselle, cicloStazCaselle, i);
 			} else {
 				int tipoRandom = Casella.getTipoRandom();
 				switch(tipoRandom) {
 				case Casella.TIPO_PROBABILITA:
-					caselle.add(new ProbabilitaImprevisto(i, Casella.TIPO_PROBABILITA, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)], Utilities.PROBABILITA[Utilities.random(0, Utilities.PROBABILITA.length-1)], Utilities.random(1, 1000000)));
-					probabilitaPresenti++;
+					addPossibilita(i);
 					break;
 					
 				case Casella.TIPO_IMPREVISTO:
-					caselle.add(new ProbabilitaImprevisto(i, Casella.TIPO_IMPREVISTO, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)], Utilities.IMPREVISTI[Utilities.random(0, Utilities.IMPREVISTI.length-1)], -Utilities.random(1, 1000000)));
-					imprevistiPresenti++;
+					addImprevisto(i);
 					break;
 					
 				}
@@ -44,7 +40,27 @@ public class Tabellone {
 		
 		
 	}
+
+	private double addStazione(double stazPerCaselle, double cicloStazCaselle, int i) {
+		caselle.add(new Casella(i, Casella.TIPO_STAZIONE, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)]));
+		stazioniPresenti++;
+		cicloStazCaselle-=stazPerCaselle;
+		return cicloStazCaselle;
+	}
+
+	private void addImprevisto(int i) {
+		caselle.add(new ProbabilitaImprevisto(i, Casella.TIPO_IMPREVISTO, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)], Utilities.IMPREVISTI[Utilities.random(0, Utilities.IMPREVISTI.length-1)], -Utilities.random(1, 1000000)));
+		imprevistiPresenti++;
+	}
+
+	private void addPossibilita(int i) {
+		caselle.add(new ProbabilitaImprevisto(i, Casella.TIPO_PROBABILITA, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)], Utilities.PROBABILITA[Utilities.random(0, Utilities.PROBABILITA.length-1)], Utilities.random(1, 1000000)));
+		probabilitaPresenti++;
+	}
 	
+	public Casella getCasella(int i) {
+		return caselle.get(i);
+	}
 	
 	public String viewTabellone() {
 		String out = "";
@@ -54,6 +70,14 @@ public class Tabellone {
 			if(casella.getTipo() == Casella.TIPO_PROBABILITA || casella.getTipo() == Casella.TIPO_IMPREVISTO) out = out.concat(" " + ((ProbabilitaImprevisto)casella).getMessaggio() + " " + ((ProbabilitaImprevisto)casella).getOffset());
 		}
 		out = out.concat("\n\nCi sono " + stazioniPresenti + " stazioni");
+		out = out.concat("\nCi sono " + probabilitaPresenti + " probabilita");
+		out = out.concat("\nCi sono " + imprevistiPresenti + " imprevisti");
+		return out;
+	}
+	
+	public String viewStatsTabellone() {
+		String out = "";
+		out = out.concat("Ci sono " + stazioniPresenti + " stazioni");
 		out = out.concat("\nCi sono " + probabilitaPresenti + " probabilita");
 		out = out.concat("\nCi sono " + imprevistiPresenti + " imprevisti");
 		return out;
