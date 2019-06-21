@@ -9,8 +9,8 @@ public class UnipolyMain {
 	private static final int DENARO_MIN = 0;
 	private static final int DENARO_MAX = 1000000;	//Soglie per vincita e bancarotta
 	private static final int DENARO_INIZIALE = 250000;	//Denaro iniziale posseduto dal giocatore
-	public static final int NUM_STAZIONI = 3;
-	public static final int DIM_TABELLONE = 12;		//Numero di caselle e stazioni totali. DIM_TABELLONE comprende anche il numero di stazioni
+	public static final int NUM_STAZIONI = 4;
+	public static final int DIM_TABELLONE = 40;		//Numero di caselle e stazioni totali. DIM_TABELLONE comprende anche il numero di stazioni
 	private static Scanner sc = new Scanner(System.in);
 	private static Tabellone t = null;		//Oggetti tabellone e giocatore
 	private static Giocatore g = null;

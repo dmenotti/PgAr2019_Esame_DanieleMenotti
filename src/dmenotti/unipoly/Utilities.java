@@ -6,8 +6,8 @@ public class Utilities {	//Alcuni attributi e metodi utili per l'esecuzione del 
 	public static final String[] NOMI_TABELLONI = {"Abruzzo","Basilicata","Calabria","Campania","Emilia romagna","Friuli venezia giulia","Lazio","Liguria","Lombardia","Marche","Molise","Piemonte","Puglia","Sardegna","Sicilia","Toscana","Trentino alto adige","Umbria","Valle d'aosta","Veneto"};
 	
 	public static final int[] NOMI_TABELLONI_UTILIZZATI = new int[20];	//da utilizzare con NOMI_TABELLONI, si prevede che non possano esistere due tabelloni con lo stesso nome
-	public static final String[] PROBABILITA = {"p1","p2","p3","p4","p5","p6","p7","p8","p9","p10"};	//Elenco di probabilità e imprevisti
-	public static final String[] IMPREVISTI = {"i1","i2","i3","i4","i5","i6","i7","i8","i9","i10"};
+	public static final String[] PROBABILITA = 	{"Vi arriva la borsa di studio","Ci sono gli hamburger in sconto","Fuori c'è bel tempo","Eclipse non si è mai bloccato","Non c'è coda in mensa","Trovate una monetina sotto alla sedia","I biscotti che vi piacciono sono in sconto","Avete passato un esame con 30","Il treno è in orario","Vi è arrivato un pacco"}; //Elenco di probabilità e imprevisti
+	public static final String[] IMPREVISTI = {"Avete preso 17 su 30","Vi si rompe il computer un giorno prima dell'esame","Dovete pagare le tasse universitarie","Dovete comprare le ciliegie","Si è bruciata la lampadina in bagno","Il gatto vi ha rotto gli occhiali","Avete finito le ciambelline","inciampate in piscina","Vi si rompe la penna","Si è rotto il treno"};
 	
 	public static int random(int start, int end) {
 		return (int)Math.round(Math.random()*(end-start)+start);	//Funzione random utilizzata all'interno del programma
