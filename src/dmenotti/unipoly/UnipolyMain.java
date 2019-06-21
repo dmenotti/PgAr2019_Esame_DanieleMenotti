@@ -4,6 +4,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UnipolyMain {
+	private static final int DADO_MAX = 12;
+	private static final int DADO_MIN = 1;
 	private static final int DENARO_MIN = 0;
 	private static final int DENARO_MAX = 1000000;
 	private static final int DENARO_INIZIALE = 250000;
@@ -16,8 +18,10 @@ public class UnipolyMain {
 	public static void main(String[] args) {
 		System.out.println("Benvenuto in Unipoly");
 		g = creaGiocatore();
-		System.out.println("Vuoi scegliere il tabellone? (S)i, (N)o, default no: ");
-		if(sc.nextLine().equalsIgnoreCase("S")) scegliTabellone();
+		System.out.print("Vuoi scegliere il tabellone? (S)i, (N)o, default no: ");
+		if(sc.nextLine().equalsIgnoreCase("S")) {
+			if(scegliTabellone() == -1) return;
+		}
 		else creaTabellone();
 		posAttuale();
 		gioca();
@@ -28,7 +32,7 @@ public class UnipolyMain {
 			System.out.print("Premi invio per tirare i dadi o scrivi q per uscire ");
 			if(sc.nextLine().equalsIgnoreCase("q")) return;
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-			int tiroDadi = Utilities.random(1, 6);
+			int tiroDadi = Utilities.random(DADO_MIN, DADO_MAX);
 			System.out.println("I dadi dicono: " + tiroDadi);
 			g.avanzaDiN(tiroDadi);
 			System.out.println("Sei stato spostato a " + t.getCasella(g.getPosizione()).getNome());
@@ -103,27 +107,46 @@ public class UnipolyMain {
 		} while(true);
 	}
 	
-	private static void scegliTabellone() {
+	private static int scegliTabellone() {
 		int numTabelloni = -1;
 		do {
 			System.out.println("Quanti tabelloni vuoi creare? (2-20): ");
 			try {
 				numTabelloni = sc.nextInt();
+				sc.nextLine();
 			} catch (InputMismatchException e) {
 			}
-			if(numTabelloni>=2 && numTabelloni<=20) return;
+			if(numTabelloni>=2 && numTabelloni<=20) break;
 		} while(true);
 		Tabellone.creaTabelloni(numTabelloni);
 		System.out.println("I tabelloni disponibili sono:");
 		for(Tabellone tabEstratto : Tabellone.archivioMappe) {
-			System.out.println("Tabellone ");
+			System.out.println("Tabellone " + tabEstratto.getId() + ", " + tabEstratto.getNome());
 		}
+		
+		boolean scelto = false;
+		do {
+			System.out.print("Scrivi il nome del tabellone scelto o q per uscire: ");
+			String tabScelto = sc.nextLine();
+			if(tabScelto.equalsIgnoreCase("q")) return -1;
+			for(Tabellone tabEstratto : Tabellone.archivioMappe) {
+				if(tabEstratto.getNome().equalsIgnoreCase(tabScelto)) {
+					t = tabEstratto;
+					scelto = true;
+				}
+			}
+			if(!scelto) System.out.println("Nome non presente!");
+		} while(!scelto);
+		
+		System.out.println("Il tabellone scelto possiete i seguenti parametri:");
+		System.out.println(t.viewStatsTabellone());
+		return 0;
 	}
 	
 	private static void creaTabellone() {
 		do {
 			try {
-				t = new Tabellone(DIM_TABELLONE, NUM_STAZIONI);
+				t = new Tabellone(0, DIM_TABELLONE, NUM_STAZIONI);
 			} catch (IncorrectSizeException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Oh-oh, errore:" + e.getMessage());

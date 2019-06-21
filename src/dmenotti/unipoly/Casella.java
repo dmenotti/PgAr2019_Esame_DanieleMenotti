@@ -5,6 +5,7 @@ public class Casella {
 	public static final int TIPO_STAZIONE = 1;
 	public static final int TIPO_PROBABILITA = 2;
 	public static final int TIPO_IMPREVISTO = 3;
+	public static final int TIPO_EDIFICIO = 4;
 	
 	
 	private int id;
@@ -34,6 +35,8 @@ public class Casella {
 	}
 	
 	public static int getTipoRandom() {
-		return (int)Math.round(Math.random()+2);
+		int num = (int)Math.round(Math.random()*3+2);
+		if(num>4) num = 4;
+		return num;
 	}
 }

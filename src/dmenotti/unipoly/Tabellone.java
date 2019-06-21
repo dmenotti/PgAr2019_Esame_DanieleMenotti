@@ -12,9 +12,11 @@ public class Tabellone {
 	private int probabilitaPresenti = 0;
 	private int imprevistiPresenti = 0;
 	private String nome;
+	private int id;
 	
 	
-	public Tabellone(int numCaselle, int numStazioni) throws IncorrectSizeException {
+	public Tabellone(int id, int numCaselle, int numStazioni) throws IncorrectSizeException {
+		this.id = id;
 		if(numCaselle<CASELLE_MIN) throw new IncorrectSizeException("Devono essere presenti almeno " + CASELLE_MIN + " caselle.");
 		if(numCaselle<CASELLE_MIN) throw new IncorrectSizeException("Devono essere presenti almeno " + STAZIONI_MIN + " stazioni.");
 		double stazPerCaselle = (double)numCaselle/(double)(numStazioni+1);
@@ -36,12 +38,26 @@ public class Tabellone {
 					addImprevisto(i);
 					break;
 					
+				case Casella.TIPO_EDIFICIO:
+					addEdificio(i);
+					break;
+					
 				}
 			}
 			cicloStazCaselle++;
 		}
 		
-		nome = Utilities.NOMI_TABELLONI[Utilities.random(0, Utilities.NOMI_TABELLONI.length-1)];
+		String nomeTab = "";
+		do {
+			int numNome = Utilities.random(0, Utilities.NOMI_TABELLONI.length-1);
+			if(Utilities.NOMI_TABELLONI_UTILIZZATI[numNome] == 0) {
+				nomeTab = Utilities.NOMI_TABELLONI[numNome];
+				Utilities.NOMI_TABELLONI_UTILIZZATI[numNome] = 1;
+				break;
+			}
+		} while(true);
+		
+		nome = nomeTab;
 	}
 
 	private double addStazione(double stazPerCaselle, double cicloStazCaselle, int i) {
@@ -52,6 +68,11 @@ public class Tabellone {
 	}
 
 	private void addImprevisto(int i) {
+		caselle.add(new ProbabilitaImprevisto(i, Casella.TIPO_IMPREVISTO, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)], Utilities.IMPREVISTI[Utilities.random(0, Utilities.IMPREVISTI.length-1)], -Utilities.random(1, 1000000)));
+		imprevistiPresenti++;
+	}
+	
+	private void addEdificio(int i) {
 		caselle.add(new ProbabilitaImprevisto(i, Casella.TIPO_IMPREVISTO, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)], Utilities.IMPREVISTI[Utilities.random(0, Utilities.IMPREVISTI.length-1)], -Utilities.random(1, 1000000)));
 		imprevistiPresenti++;
 	}
@@ -94,10 +115,14 @@ public class Tabellone {
 		return nome;
 	}
 
+	public int getId() {
+		return id;
+	}
+
 	public static void creaTabelloni(int num) {
 		for(int i=0; i<num; i++) {
 			try {
-				archivioMappe.add(new Tabellone(UnipolyMain.DIM_TABELLONE, UnipolyMain.NUM_STAZIONI));
+				archivioMappe.add(new Tabellone(i+1, UnipolyMain.DIM_TABELLONE, UnipolyMain.NUM_STAZIONI));
 			} catch (IncorrectSizeException e) {
 			}
 		}
