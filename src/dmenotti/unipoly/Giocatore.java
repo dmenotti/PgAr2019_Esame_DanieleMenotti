@@ -38,6 +38,10 @@ public class Giocatore {
 		if(posizione>UnipolyMain.DIM_TABELLONE) posizione = posizione%UnipolyMain.DIM_TABELLONE;
 	}
 	
+	public void avanzaVerso(int dest) {
+		posizione = dest;
+	}
+	
 	public void aggiornaDenaro(int offset) {
 		denaro+=offset;
 	}
