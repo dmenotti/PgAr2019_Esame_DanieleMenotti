@@ -49,6 +49,11 @@ public class UnipolyMain {
 			System.out.println("Casella iniziale: puoi riposarti, non succedera' nulla");
 			break;
 			
+		case Casella.TIPO_EDIFICIO:
+			System.out.println("Edificio: che bel cantiere...");
+			actionProbabilita();
+			break;
+			
 		case Casella.TIPO_PROBABILITA:
 			System.out.println("Probabilita': e' il tuo giorno fortunato!");
 			actionProbabilita();
@@ -63,6 +68,13 @@ public class UnipolyMain {
 			System.out.println("Stazione: Choo Choo, tutti in carrozza!");
 			actionStazione();
 			break;
+		}
+	}
+	
+	private static void actionEdificio() {
+		if(((Edificio)t.getCasella(g.getPosizione())).getEdifPresente() == 0) {
+			System.out.println("Vuoi acquistare un edificio?");
+			System.out.println("Una casa costa ");
 		}
 	}
 	

@@ -8,6 +8,7 @@ public class Tabellone {
 	public static ArrayList<Tabellone> archivioMappe = new ArrayList<Tabellone>();
 	
 	private ArrayList<Casella> caselle = new ArrayList<Casella>();
+	private int edificiPresenti = 0;
 	private int stazioniPresenti = 0;
 	private int probabilitaPresenti = 0;
 	private int imprevistiPresenti = 0;
@@ -73,8 +74,8 @@ public class Tabellone {
 	}
 	
 	private void addEdificio(int i) {
-		caselle.add(new ProbabilitaImprevisto(i, Casella.TIPO_IMPREVISTO, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)], Utilities.IMPREVISTI[Utilities.random(0, Utilities.IMPREVISTI.length-1)], -Utilities.random(1, 1000000)));
-		imprevistiPresenti++;
+		caselle.add(new Edificio(i, Casella.TIPO_EDIFICIO, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)]));
+		edificiPresenti++;
 	}
 
 	private void addPossibilita(int i) {
@@ -93,6 +94,7 @@ public class Tabellone {
 			out = out.concat(casella.getTipo() + " " + casella.getNome());
 			if(casella.getTipo() == Casella.TIPO_PROBABILITA || casella.getTipo() == Casella.TIPO_IMPREVISTO) out = out.concat(" " + ((ProbabilitaImprevisto)casella).getMessaggio() + " " + ((ProbabilitaImprevisto)casella).getOffset());
 		}
+		out = out.concat("\n\nCi sono " + edificiPresenti + " edifici");
 		out = out.concat("\n\nCi sono " + stazioniPresenti + " stazioni");
 		out = out.concat("\nCi sono " + probabilitaPresenti + " probabilita");
 		out = out.concat("\nCi sono " + imprevistiPresenti + " imprevisti");
@@ -101,7 +103,8 @@ public class Tabellone {
 	
 	public String viewStatsTabellone() {
 		String out = "";
-		out = out.concat("Ci sono " + stazioniPresenti + " stazioni");
+		out = out.concat("\nCi sono " + edificiPresenti + " edifici");
+		out = out.concat("\nCi sono " + stazioniPresenti + " stazioni");
 		out = out.concat("\nCi sono " + probabilitaPresenti + " probabilita");
 		out = out.concat("\nCi sono " + imprevistiPresenti + " imprevisti");
 		return out;
