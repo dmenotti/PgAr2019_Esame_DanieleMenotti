@@ -26,15 +26,15 @@ public class Tabellone {
 		
 		caselle.add(new Casella(0, Casella.TIPO_INIZIALE, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)]));
 		int i;
-		for(i=1; i<numCaselle-2; i++) {
+		for(i=1; i<numCaselle; i++) {
 			if(cicloStazCaselle>=stazPerCaselle) {
 				addStazione(i);
 				cicloStazCaselle-=stazPerCaselle;
 				settoreAttivo++;
 			} else {
 				if(probabilitaPresenti == 0) addPossibilita(i);
-				if(imprevistiPresenti == 0) addImprevisto(i);
-				creaCasellaRandom(settoreAttivo, i);
+				else if(imprevistiPresenti == 0) addImprevisto(i);
+				else creaCasellaRandom(settoreAttivo, i);
 			}
 			cicloStazCaselle++;
 		}

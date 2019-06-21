@@ -196,7 +196,7 @@ public class UnipolyMain {
 	private static int scegliTabellone() {
 		int numTabelloni = -1;
 		do {
-			System.out.println("Quanti tabelloni vuoi creare? (2-20): ");
+			System.out.print("Quanti tabelloni vuoi creare? (2-20): ");
 			try {
 				numTabelloni = sc.nextInt();
 				sc.nextLine();
@@ -245,7 +245,11 @@ public class UnipolyMain {
 	
 	private static Giocatore creaGiocatore() {
 		System.out.print("E' ora di creare il tuo personaggio.\nCome ti chiami? ");
-		Giocatore g = new Giocatore(0, sc.nextLine(), DENARO_INIZIALE);
+		String nome;
+		do {
+			nome = sc.nextLine();
+		} while(nome.isBlank());
+		Giocatore g = new Giocatore(0, nome, DENARO_INIZIALE);
 		System.out.println(g.getNome() + ", inizi il gioco con " + DENARO_INIZIALE + " I€€€");
 		return g;
 	}
