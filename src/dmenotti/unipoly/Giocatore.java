@@ -7,7 +7,7 @@ public class Giocatore {
 	private int posizione = 0;
 	
 	
-	public Giocatore(int id, String nome, int denaro) {
+	public Giocatore(int id, String nome, int denaro) {	//Costruttore semplice per Giocatore
 		this.id = id;
 		this.nome = nome;
 		this.denaro = denaro;
@@ -33,12 +33,12 @@ public class Giocatore {
 		return posizione;
 	}
 	
-	public void avanzaDiN(int i) {
+	public void avanzaDiN(int i) {	//Permette di avanzare di N posti
 		posizione+=i;
-		if(posizione>=UnipolyMain.DIM_TABELLONE) posizione = posizione%UnipolyMain.DIM_TABELLONE;
+		if(posizione>=UnipolyMain.DIM_TABELLONE) posizione = posizione%UnipolyMain.DIM_TABELLONE;	//Se arrivo lla fine del tabellone devo ripartire
 	}
 	
-	public void avanzaVerso(int dest) {
+	public void avanzaVerso(int dest) {	//Permette di avanzare ad una posizione precisa
 		posizione = dest;
 	}
 	

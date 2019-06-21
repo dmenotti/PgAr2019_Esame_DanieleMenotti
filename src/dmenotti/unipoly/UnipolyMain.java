@@ -9,8 +9,8 @@ public class UnipolyMain {
 	private static final int DENARO_MIN = 0;
 	private static final int DENARO_MAX = 1000000;
 	private static final int DENARO_INIZIALE = 250000;
-	public static final int NUM_STAZIONI = 2;
-	public static final int DIM_TABELLONE = 6;
+	public static final int NUM_STAZIONI = 3;
+	public static final int DIM_TABELLONE = 12;
 	private static Scanner sc = new Scanner(System.in);
 	private static Tabellone t = null;
 	private static Giocatore g = null;
@@ -41,6 +41,12 @@ public class UnipolyMain {
 		System.out.println("La partita è terminata!");
 		if(g.getDenaro()<DENARO_MIN) System.out.println("Sei andato in bancarotta con un debito di " + (-g.getDenaro()) + " I€€€");
 		if(g.getDenaro()>DENARO_MAX) System.out.println("Hai vinto con " + g.getDenaro() + " I€€€");
+		
+		System.out.print("Vuoi vedere la struttura del tabellone? (S)i, (N)o, default no ");
+		String input = sc.nextLine();
+		if(!input.isBlank()) {
+			if(Character.toString(input.charAt(0)).equalsIgnoreCase("s")) System.out.println(t.viewTabellone());
+		}
 	}
 	
 	private static void checkTipo() {
@@ -172,7 +178,7 @@ public class UnipolyMain {
 				System.out.println("ID " + casella.getId() + ", Stazione di " + casella.getNome());
 			}
 		}
-		System.out.println("Scrivi l'ID della stazione di destinazione; se non vuoi spostarti premi semplicemente invio: ");
+		System.out.print("Scrivi l'ID della stazione di destinazione; se non vuoi spostarti premi semplicemente invio: ");
 		String dest = sc.nextLine();
 		if(dest.isBlank()) return;
 		else {

@@ -39,7 +39,7 @@ public class Casella {
 
 
 	public static int getTipoRandom() {
-		int num = (int)Math.round(Math.random()*3+2);
+		int num = (int)Math.round(Math.random()*4+2);
 		if(num>4) num = 4;
 		return num;
 	}
