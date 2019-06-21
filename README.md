@@ -21,5 +21,5 @@ La mappa non sarà visibile al giocatore per tutta la durata della partita. Verr
 A fine partita, se lo desidererete, potrete vedere la mappa su cui avete giocato.
 
 ## È come il vero Monopoly?
-(https://i.kym-cdn.com/photos/images/newsfeed/001/457/331/a37.jpg =250x)
+![](https://i.kym-cdn.com/photos/images/newsfeed/001/457/331/a37.jpg =250x)
 
