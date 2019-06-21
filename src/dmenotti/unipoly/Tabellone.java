@@ -19,7 +19,9 @@ public class Tabellone {
 		double stazPerCaselle = (double)numCaselle/(double)(numStazioni+1);
 		double cicloStazCaselle = 0;
 		
-		for(int i=0; i<numCaselle; i++) {
+		caselle.add(new Casella(0, Casella.TIPO_INIZIALE, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)]));
+		
+		for(int i=1; i<numCaselle; i++) {
 			if(cicloStazCaselle>stazPerCaselle) {
 				cicloStazCaselle = addStazione(stazPerCaselle, cicloStazCaselle, i);
 			} else {
@@ -81,6 +83,10 @@ public class Tabellone {
 		out = out.concat("\nCi sono " + probabilitaPresenti + " probabilita");
 		out = out.concat("\nCi sono " + imprevistiPresenti + " imprevisti");
 		return out;
+	}
+
+	public ArrayList<Casella> getCaselle() {
+		return caselle;
 	}
 
 	

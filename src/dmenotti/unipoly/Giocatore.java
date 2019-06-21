@@ -27,7 +27,19 @@ public class Giocatore {
 	public int getDenaro() {
 		return denaro;
 	}
+
+
+	public int getPosizione() {
+		return posizione;
+	}
 	
+	public void avanzaDiN(int i) {
+		posizione+=6;
+		if(posizione>UnipolyMain.DIM_TABELLONE) posizione = posizione%UnipolyMain.DIM_TABELLONE;
+	}
 	
+	public void aggiornaDenaro(int offset) {
+		denaro+=offset;
+	}
 	
 }

@@ -1,6 +1,7 @@
 package dmenotti.unipoly;
 
 public class Casella {
+	public static final int TIPO_INIZIALE = 0;
 	public static final int TIPO_STAZIONE = 1;
 	public static final int TIPO_PROBABILITA = 2;
 	public static final int TIPO_IMPREVISTO = 3;
