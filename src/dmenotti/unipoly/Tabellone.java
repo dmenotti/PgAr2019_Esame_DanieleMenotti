@@ -25,28 +25,16 @@ public class Tabellone {
 		int settoreAttivo = 1;
 		
 		caselle.add(new Casella(0, Casella.TIPO_INIZIALE, Utilities.NOMI_CITTA[Utilities.random(0, Utilities.NOMI_CITTA.length-1)]));
-		
-		for(int i=1; i<numCaselle; i++) {
+		int i;
+		for(i=1; i<numCaselle-2; i++) {
 			if(cicloStazCaselle>=stazPerCaselle) {
 				addStazione(i);
 				cicloStazCaselle-=stazPerCaselle;
 				settoreAttivo++;
 			} else {
-				int tipoRandom = Casella.getTipoRandom();
-				switch(tipoRandom) {
-				case Casella.TIPO_PROBABILITA:
-					addPossibilita(i);
-					break;
-					
-				case Casella.TIPO_IMPREVISTO:
-					addImprevisto(i);
-					break;
-					
-				case Casella.TIPO_EDIFICIO:
-					addEdificio(i, settoreAttivo);
-					break;
-					
-				}
+				if(probabilitaPresenti == 0) addPossibilita(i);
+				if(imprevistiPresenti == 0) addImprevisto(i);
+				creaCasellaRandom(settoreAttivo, i);
 			}
 			cicloStazCaselle++;
 		}
@@ -62,6 +50,24 @@ public class Tabellone {
 		} while(true);
 		
 		nome = nomeTab;
+	}
+
+	private void creaCasellaRandom(int settoreAttivo, int i) {
+		int tipoRandom = Casella.getTipoRandom();
+		switch(tipoRandom) {
+		case Casella.TIPO_PROBABILITA:
+			addPossibilita(i);
+			break;
+			
+		case Casella.TIPO_IMPREVISTO:
+			addImprevisto(i);
+			break;
+			
+		case Casella.TIPO_EDIFICIO:
+			addEdificio(i, settoreAttivo);
+			break;
+			
+		}
 	}
 
 	private void addStazione(int i) {

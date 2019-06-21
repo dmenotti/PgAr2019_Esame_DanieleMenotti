@@ -8,6 +8,7 @@ public class Casella {
 	public static final int TIPO_EDIFICIO = 4;
 	
 	
+	
 	private int id;
 	private int tipo;
 	private String nome;
