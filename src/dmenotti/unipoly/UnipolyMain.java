@@ -1,5 +1,6 @@
 package dmenotti.unipoly;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UnipolyMain {
@@ -15,7 +16,9 @@ public class UnipolyMain {
 	public static void main(String[] args) {
 		System.out.println("Benvenuto in Unipoly");
 		g = creaGiocatore();
-		creaTabellone();
+		System.out.println("Vuoi scegliere il tabellone? (S)i, (N)o, default no: ");
+		if(sc.nextLine().equalsIgnoreCase("S")) scegliTabellone();
+		else creaTabellone();
 		posAttuale();
 		gioca();
 	}
@@ -100,10 +103,27 @@ public class UnipolyMain {
 		} while(true);
 	}
 	
+	private static void scegliTabellone() {
+		int numTabelloni = -1;
+		do {
+			System.out.println("Quanti tabelloni vuoi creare? (2-20): ");
+			try {
+				numTabelloni = sc.nextInt();
+			} catch (InputMismatchException e) {
+			}
+			if(numTabelloni>=2 && numTabelloni<=20) return;
+		} while(true);
+		Tabellone.creaTabelloni(numTabelloni);
+		System.out.println("I tabelloni disponibili sono:");
+		for(Tabellone tabEstratto : Tabellone.archivioMappe) {
+			System.out.println("Tabellone ");
+		}
+	}
+	
 	private static void creaTabellone() {
 		do {
 			try {
-				t = new Tabellone(g, DIM_TABELLONE, NUM_STAZIONI);
+				t = new Tabellone(DIM_TABELLONE, NUM_STAZIONI);
 			} catch (IncorrectSizeException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Oh-oh, errore:" + e.getMessage());

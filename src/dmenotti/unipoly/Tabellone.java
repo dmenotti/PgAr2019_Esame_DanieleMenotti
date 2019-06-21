@@ -5,15 +5,16 @@ import java.util.ArrayList;
 public class Tabellone {
 	private static int CASELLE_MIN = 5;
 	private static int STAZIONI_MIN = 2;
+	public static ArrayList<Tabellone> archivioMappe = new ArrayList<Tabellone>();
 	
 	private ArrayList<Casella> caselle = new ArrayList<Casella>();
-	private Giocatore giocatore;
 	private int stazioniPresenti = 0;
 	private int probabilitaPresenti = 0;
 	private int imprevistiPresenti = 0;
+	private String nome;
 	
-	public Tabellone(Giocatore giocatore, int numCaselle, int numStazioni) throws IncorrectSizeException {
-		this.giocatore = giocatore;
+	
+	public Tabellone(int numCaselle, int numStazioni) throws IncorrectSizeException {
 		if(numCaselle<CASELLE_MIN) throw new IncorrectSizeException("Devono essere presenti almeno " + CASELLE_MIN + " caselle.");
 		if(numCaselle<CASELLE_MIN) throw new IncorrectSizeException("Devono essere presenti almeno " + STAZIONI_MIN + " stazioni.");
 		double stazPerCaselle = (double)numCaselle/(double)(numStazioni+1);
@@ -40,7 +41,7 @@ public class Tabellone {
 			cicloStazCaselle++;
 		}
 		
-		
+		nome = Utilities.NOMI_TABELLONI[Utilities.random(0, Utilities.NOMI_TABELLONI.length-1)];
 	}
 
 	private double addStazione(double stazPerCaselle, double cicloStazCaselle, int i) {
@@ -88,8 +89,18 @@ public class Tabellone {
 	public ArrayList<Casella> getCaselle() {
 		return caselle;
 	}
+		
+	public String getNome() {
+		return nome;
+	}
 
-	
-	
+	public static void creaTabelloni(int num) {
+		for(int i=0; i<num; i++) {
+			try {
+				archivioMappe.add(new Tabellone(UnipolyMain.DIM_TABELLONE, UnipolyMain.NUM_STAZIONI));
+			} catch (IncorrectSizeException e) {
+			}
+		}
+	}
 }
 
